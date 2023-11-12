@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     private Animator            _animator;
     private CapsuleCollider2D   _collider;
     private EMovementMode       _eMovementMode;
-    private const float         JUMP_VELOCITY = 15.0f;
+    private const float         JUMP_VELOCITY = 13.0f;
     private const float         RUN_VELOCITY = 7.0f;
     private const float         CLIMB_VELOCITY = 3.0f;
     private const int           MAX_JUMPS_IN_ROW = 1;
@@ -67,7 +67,6 @@ public class PlayerController : MonoBehaviour
         else
             _eMovementMode = EMovementMode.Idle;
 
-        Debug.Log(_eMovementMode);
         _animator.SetInteger("movementMode", (int)_eMovementMode);
         switch (_eMovementMode)
         {
