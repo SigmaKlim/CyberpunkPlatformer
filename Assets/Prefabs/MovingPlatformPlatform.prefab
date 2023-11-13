@@ -542,6 +542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _velocityY: 3
+  _rails: {fileID: 6483742565960250874, guid: 10e1528737b6ab44390d09a7261979ec, type: 3}
 --- !u!114 &6929875566468704538
 MonoBehaviour:
   m_ObjectHideFlags: 0
