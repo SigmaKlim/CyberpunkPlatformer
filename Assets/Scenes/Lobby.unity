@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 646718249}
   - component: {fileID: 646718248}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: ButtonCreate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -423,8 +423,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 409, y: 268.5428}
-  m_SizeDelta: {x: 275.2461, y: 52.8676}
+  m_AnchoredPosition: {x: 310, y: 197.2}
+  m_SizeDelta: {x: 160, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &646718248
 MonoBehaviour:
@@ -599,8 +599,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -154.0974, y: -16.3746}
-  m_SizeDelta: {x: 749.8052, y: 500.7493}
+  m_AnchoredPosition: {x: -90.464, y: -8.3198}
+  m_SizeDelta: {x: 580.81, y: 366.64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &839895722
 MonoBehaviour:
@@ -624,7 +624,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 26
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -703,7 +703,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 26
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -757,7 +757,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -449, y: 271}
+  m_AnchoredPosition: {x: -300.87, y: 190}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1299047073
@@ -782,10 +782,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 26
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -861,7 +861,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 26
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -993,8 +993,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -150.2014, y: -0.2696}
-  m_SizeDelta: {x: 785.597, y: 588.5392}
+  m_AnchoredPosition: {x: -82.597, y: 1.6213}
+  m_SizeDelta: {x: 606.81, y: 424.7567}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1803902670
 MonoBehaviour:
@@ -1047,7 +1047,7 @@ GameObject:
   - component: {fileID: 1948147953}
   - component: {fileID: 1948147952}
   m_Layer: 5
-  m_Name: Button (Legacy) (1)
+  m_Name: ButtonJoin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1070,8 +1070,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 409, y: 193}
-  m_SizeDelta: {x: 275.2461, y: 52.8676}
+  m_AnchoredPosition: {x: 310, y: 156.5}
+  m_SizeDelta: {x: 160, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1948147952
 MonoBehaviour:
