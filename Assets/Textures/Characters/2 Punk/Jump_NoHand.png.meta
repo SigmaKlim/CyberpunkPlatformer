@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 63795b23fd57a6f4f8d9a3cb58dfc485
+guid: 91ae604e886f1774dad4b1d3a90c95e5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -107,7 +107,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: Server
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -120,7 +120,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: Android
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -136,7 +136,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Punk_run_attack_0
+      name: Jump_NoHand_0
       rect:
         serializedVersion: 2
         x: 0
@@ -150,14 +150,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eef8f5e3a2cf8934fb651e177b131e90
-      internalID: 206339360
+      spriteID: 9792711679f1bf34ba5641f5491b813f
+      internalID: 650532281
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Punk_run_attack_1
+      name: Jump_NoHand_1
       rect:
         serializedVersion: 2
         x: 48
@@ -171,14 +171,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99c763ad083e9174588af1f41a09a9a4
-      internalID: 1474880917
+      spriteID: 93a355ecb174868488199fc5bfb1b896
+      internalID: -1521069587
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Punk_run_attack_2
+      name: Jump_NoHand_2
       rect:
         serializedVersion: 2
         x: 96
@@ -192,14 +192,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca5d0f904388db8448a84c1efe211a34
-      internalID: 1704254611
+      spriteID: cc1a5b169f8732c4da504182cfff0ca7
+      internalID: -1949760224
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Punk_run_attack_3
+      name: Jump_NoHand_3
       rect:
         serializedVersion: 2
         x: 144
@@ -213,50 +213,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ae0d315c2c2b1bf44a9b4dbef2fb0c5a
-      internalID: 1878415643
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Punk_run_attack_4
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 48
-        height: 48
-      alignment: 9
-      pivot: {x: 0.25, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e5fa207594c6f2342a7fc1f4a84dc48b
-      internalID: 147473639
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Punk_run_attack_5
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 0
-        width: 48
-        height: 48
-      alignment: 9
-      pivot: {x: 0.25, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 714ea290e1d07ec458ce79a9e6973847
-      internalID: 1012598730
+      spriteID: 7e6ed1ec467f1d942a50b00fd953a338
+      internalID: 290143520
       vertices: []
       indices: 
       edges: []
@@ -272,12 +230,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Punk_run_attack_0: 206339360
-      Punk_run_attack_1: 1474880917
-      Punk_run_attack_2: 1704254611
-      Punk_run_attack_3: 1878415643
-      Punk_run_attack_4: 147473639
-      Punk_run_attack_5: 1012598730
+      Jump_NoHand_0: 650532281
+      Jump_NoHand_1: -1521069587
+      Jump_NoHand_2: -1949760224
+      Jump_NoHand_3: 290143520
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

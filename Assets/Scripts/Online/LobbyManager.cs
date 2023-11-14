@@ -13,7 +13,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.NickName = "Player" + Random.Range(1000, 9999);
         Log("Player's name is set to " + PhotonNetwork.NickName);
         PhotonNetwork.GameVersion = "1";
-        PhotonNetwork.AutomaticallySyncScene = true;
+        //PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
     }
 

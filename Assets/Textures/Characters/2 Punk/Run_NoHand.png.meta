@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 63795b23fd57a6f4f8d9a3cb58dfc485
+guid: dc91a6bd1a6101a45b43a279ba6a62f7
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -107,7 +107,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: Server
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -120,7 +120,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: Android
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -136,7 +136,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Punk_run_attack_0
+      name: Run_NoHand_0
       rect:
         serializedVersion: 2
         x: 0
@@ -150,14 +150,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eef8f5e3a2cf8934fb651e177b131e90
-      internalID: 206339360
+      spriteID: 4edcf8bec0546d449927f16be9c5c6d6
+      internalID: 395936691
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Punk_run_attack_1
+      name: Run_NoHand_1
       rect:
         serializedVersion: 2
         x: 48
@@ -171,14 +171,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99c763ad083e9174588af1f41a09a9a4
-      internalID: 1474880917
+      spriteID: e9130e224b027984a9b53bec2041926a
+      internalID: 1900745810
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Punk_run_attack_2
+      name: Run_NoHand_2
       rect:
         serializedVersion: 2
         x: 96
@@ -192,14 +192,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca5d0f904388db8448a84c1efe211a34
-      internalID: 1704254611
+      spriteID: bccc10dca76c19e46a292ad3ff41861b
+      internalID: -1456570028
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Punk_run_attack_3
+      name: Run_NoHand_3
       rect:
         serializedVersion: 2
         x: 144
@@ -213,14 +213,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ae0d315c2c2b1bf44a9b4dbef2fb0c5a
-      internalID: 1878415643
+      spriteID: a461be8a8bab2664fa63d2f41ec75789
+      internalID: 938357912
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Punk_run_attack_4
+      name: Run_NoHand_4
       rect:
         serializedVersion: 2
         x: 192
@@ -234,14 +234,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e5fa207594c6f2342a7fc1f4a84dc48b
-      internalID: 147473639
+      spriteID: 0fde628ae8fd4294ca86581fb34ddec5
+      internalID: -694082631
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Punk_run_attack_5
+      name: Run_NoHand_5
       rect:
         serializedVersion: 2
         x: 240
@@ -255,8 +255,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 714ea290e1d07ec458ce79a9e6973847
-      internalID: 1012598730
+      spriteID: a054530fc3d31aa489c62de327414d8f
+      internalID: -1809804460
       vertices: []
       indices: 
       edges: []
@@ -272,12 +272,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Punk_run_attack_0: 206339360
-      Punk_run_attack_1: 1474880917
-      Punk_run_attack_2: 1704254611
-      Punk_run_attack_3: 1878415643
-      Punk_run_attack_4: 147473639
-      Punk_run_attack_5: 1012598730
+      Run_NoHand_0: 395936691
+      Run_NoHand_1: 1900745810
+      Run_NoHand_2: -1456570028
+      Run_NoHand_3: 938357912
+      Run_NoHand_4: -694082631
+      Run_NoHand_5: -1809804460
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

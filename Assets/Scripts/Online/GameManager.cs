@@ -9,10 +9,19 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public Text LogTextOutput;
+    public GameObject PlayerPrefab;
+    public GameObject PlayerOrigin;
     // Start is called before the first frame update
     void Start()
     {
+        if (PhotonNetwork.IsConnected == false)
+            SceneManager.LoadScene("Lobby");
+        Vector2 playerOrigin = PlayerOrigin.transform.position;
+        Vector2 playerPosition = playerOrigin + new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+        GameObject newPlayerObject = PhotonNetwork.Instantiate(PlayerPrefab.name, playerPosition, Quaternion.identity);
         
+        string message = "You were spawned at " + playerPosition;
+        Log(message);
     }
 
     // Update is called once per frame
