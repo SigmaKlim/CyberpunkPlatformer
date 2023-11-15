@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,8 +15,7 @@ public class GunController : MonoBehaviour
     private Animator _shotAnimator;
     private const float SHOOT_ANIMATION_DURATION = 0.5f;
     private float _secondSinceShootAnimationStarted;
-    private const float BULLET_VELOCITY = 9.0f;
-    private Vector2 _bulletStartingPosition;
+    private const float BULLET_VELOCITY = 12.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +23,6 @@ public class GunController : MonoBehaviour
         _bulletRb = Bullet.GetComponent <Rigidbody2D>();
         _shotSprite = GetComponent<SpriteRenderer>();
         _shotAnimator = GetComponent<Animator>();
-        _bulletStartingPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -31,19 +30,20 @@ public class GunController : MonoBehaviour
     {
         if (_isShooting == true)
         {
-            Bullet.SetActive(true);
+            //Bullet.SetActive(true);
             _shotAnimator.SetBool("isShooting", true);
             _shotSprite.enabled = true;
             _secondSinceShootAnimationStarted = 0.0f;
-            Bullet.transform.position = _bulletStartingPosition;
+            //Bullet.transform.position = transform.position;
+            GameObject bullet = PhotonNetwork.Instantiate(Bullet.name, transform.position, Quaternion.identity);
             if (_isShootingRight == true)
             {
-                _bulletRb.velocity = new Vector2(BULLET_VELOCITY, 0.0f);
+                bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(BULLET_VELOCITY, 0.0f);
                 _shotSprite.flipX = false;
             }
             else
             {
-                _bulletRb.velocity = new Vector2(-BULLET_VELOCITY, 0.0f);
+                bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(-BULLET_VELOCITY, 0.0f);
                 _shotSprite.flipX = true;
             }
             _isShooting = false;

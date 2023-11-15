@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     private const float         INTERACT_ANIMATION_DURATION = 0.5f;
     private float               _secondsSinceInteractAnimationStarted;
     public float                _secondsSinceShootAnimationStarted;
-    private const float         SHOOTING_ANIMATION_DURATION = 1.0f;
+    private const float         SHOOTING_ANIMATION_DURATION = 0.5f;
     private bool                _canInteract;
     private LayerMask           _defaultExcludeLayerMask;
     public GameObject           RightHandFly;
@@ -187,7 +187,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 _secondsSinceInteractAnimationStarted = 0.0f;
                 break;
             case EMovementMode.Interacting:
-                _secondsSinceInteractAnimationStarted += Time.deltaTime;
+                _secondsSinceInteractAnimationStarted += UnityEngine.Time.deltaTime;
                 if (_secondsSinceInteractAnimationStarted > INTERACT_ANIMATION_DURATION)
                 {
                     _eMovementMode = EMovementMode.Idle;
@@ -195,6 +195,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 }
                     break;
             case EMovementMode.ShootingFlyingUp:
+                if (_secondsSinceShootAnimationStarted == 0.0f)
+                    Shot.GetComponent<GunController>().Shoot(_isFacingRight);
                 _secondsSinceShootAnimationStarted += Time.deltaTime;
                 if (_isFacingRight == true) _activeHand = RightHandFly;
                 else _activeHand = LeftHandFly;
@@ -206,6 +208,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 }
                     break;
             case EMovementMode.ShootingFlyingDown:;
+                if (_secondsSinceShootAnimationStarted == 0.0f)
+                    Shot.GetComponent<GunController>().Shoot(_isFacingRight);
                 _secondsSinceShootAnimationStarted += Time.deltaTime;
                 if (_isFacingRight == true) _activeHand = RightHandFly;
                 else _activeHand = LeftHandFly;
@@ -217,10 +221,12 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 }
                     break;
             case EMovementMode.ShootingIdle:
+                if (_secondsSinceShootAnimationStarted == 0.0f)
+                    Shot.GetComponent<GunController>().Shoot(_isFacingRight);
                 _secondsSinceShootAnimationStarted += Time.deltaTime;
                 if (_isFacingRight == true) _activeHand = RightHandIdle;
                 else _activeHand = LeftHandIdle;
-                _activeHand.SetActive(true);
+                _activeHand.SetActive(true); 
                 if (_secondsSinceShootAnimationStarted > SHOOTING_ANIMATION_DURATION)
                 {
                     _eMovementMode = EMovementMode.Idle;
@@ -228,6 +234,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 }
                     break;
             case EMovementMode.ShootingRunning:
+                if (_secondsSinceShootAnimationStarted == 0.0f)
+                    Shot.GetComponent<GunController>().Shoot(_isFacingRight);
                 _secondsSinceShootAnimationStarted += Time.deltaTime;
                 if (_isFacingRight == true) _activeHand = RightHandRun;
                 else _activeHand = LeftHandRun;
@@ -249,10 +257,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
             Gun.SetActive(true);
         }
         else Gun.SetActive(false);
-        if (_isShootActivated == true)
-        {
-            Shot.GetComponent<GunController>().Shoot(_isFacingRight);
-        }
     }
 
     public void ResetPosition()

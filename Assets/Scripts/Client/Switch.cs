@@ -25,10 +25,18 @@ public class Switch : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (_device._isOn == false)
+        {
             if (collision.gameObject.CompareTag("Player"))
                 if (collision.gameObject.GetComponent<PlayerController>().GetMovementMode() == 7)
                 {
                     SwitchOn();
+                }
+        }
+        else
+            if (collision.gameObject.CompareTag("Player"))
+                if (collision.gameObject.GetComponent<PlayerController>().GetMovementMode() == 7)
+                {
+                    SwitchOff();
                 }
     }
 
