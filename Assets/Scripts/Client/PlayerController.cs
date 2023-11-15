@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     public GameObject           LeftHandIdle;
     private GameObject          _activeHand;
     public GameObject           Gun;
+    public GameObject           Shot;
     private SpriteRenderer      _gunSprite;
 
     public int IntState;
@@ -238,6 +239,10 @@ public class PlayerController : MonoBehaviour, IPunObservable
             Gun.SetActive(true);
         }
         else Gun.SetActive(false);
+        if (_isShootActivated == true)
+        {
+            Shot.GetComponent<GunController>().Shoot(_isFacingRight);
+        }
     }
 
     public void ResetPosition()
