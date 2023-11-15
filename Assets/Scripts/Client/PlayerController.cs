@@ -16,8 +16,7 @@ enum EMovementMode
     ShootingIdle     = 8,
     ShootingRunning  = 9,
     ShootingFlyingUp = 10,
-    ShootingFlyingDown = 11,
-    StartingShoot = 12
+    ShootingFlyingDown = 11
 }
 
 public class PlayerController : MonoBehaviour, IPunObservable
@@ -32,6 +31,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     private CapsuleCollider2D   _collider;
     private PhotonView          _photonView;   
     private EMovementMode       _eMovementMode;
+    private bool                _isFacingRight;
     private const float         JUMP_VELOCITY = 13.0f;
     private const float         RUN_VELOCITY = 7.0f;
     private const float         CLIMB_VELOCITY = 3.0f;
@@ -42,13 +42,20 @@ public class PlayerController : MonoBehaviour, IPunObservable
     private const float         INTERACT_ANIMATION_DURATION = 0.5f;
     private float               _secondsSinceInteractAnimationStarted;
     private float               _secondsSinceShootAnimationStarted;
-    private const float         SHOOTING_FLY_UP_ANIMATION_DURATION = 0.33f;
-    private const float         SHOOTING_FLY_DOWN_ANIMATION_DURATION = 0.33f;
-    private const float         SHOOTING_IDLE_ANIMATION_DURATION = 0.67f;
-    private const float         SHOOTING_RUN_ANIMATION_DURATION = 1.0f;
+    private const float         SHOOTING_ANIMATION_DURATION = 1.0f;
     private bool                _canInteract;
     private LayerMask           _defaultExcludeLayerMask;
+    public GameObject           RightHandFly;
+    public GameObject           LeftHandFly;
+    public GameObject           RightHandRun;
+    public GameObject           LeftHandRun;
+    public GameObject           RightHandIdle;
+    public GameObject           LeftHandIdle;
+    private GameObject          _activeHand;
+    public GameObject           Gun;
+    private SpriteRenderer      _gunSprite;
 
+    public int IntState;
     //consumed from photon view
 
     float _dirY;
@@ -73,6 +80,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
         _secondsSinceInteractAnimationStarted = 0.0f;
         _canInteract = false;
         _defaultExcludeLayerMask = 1 << LayerMask.NameToLayer("Player");
+        _activeHand = RightHandFly;
+        _gunSprite = Gun.GetComponent<SpriteRenderer>();
         if (_photonView.IsMine == true)
         {
             GetComponentInChildren<Camera>().enabled = true;
@@ -86,6 +95,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     // Update is called once per frame
     private void Update()
     {
+        //_isShootActivated = false;
         if (_photonView.IsMine == true)
         {
             _dirY = Input.GetAxisRaw("Vertical");
@@ -93,48 +103,57 @@ public class PlayerController : MonoBehaviour, IPunObservable
             _isJumpActivated = Input.GetButtonDown("Jump");
             _isUseActivated = Input.GetButtonDown("Use");
             _isShootActivated = Input.GetButtonDown("Shoot");
-        }
-        if (_isUseActivated == true && (_eMovementMode == EMovementMode.Idle) && _canInteract)
-            _eMovementMode = EMovementMode.StartingInteract;
-        else if (_eMovementMode == EMovementMode.StartingInteract || _eMovementMode == EMovementMode.Interacting)
-            _eMovementMode = EMovementMode.Interacting;
-        else if (_isJumpActivated == true && _jumpCount < MAX_JUMPS_IN_ROW)
-            _eMovementMode = EMovementMode.StartingJump;
-        else if (_dirY != 0 && _canClimb == true)
-            _eMovementMode = EMovementMode.Climbing;
-        else if (_isShootActivated == true)
-            _eMovementMode = EMovementMode.StartingShoot;
-        else if (_rbody.velocity.y > 0.01)
-        {
-            if (_eMovementMode == EMovementMode.StartingShoot)
-                _eMovementMode = EMovementMode.ShootingFlyingUp;
+        
+            if (_isUseActivated == true && (_eMovementMode == EMovementMode.Idle) && _canInteract)
+                _eMovementMode = EMovementMode.StartingInteract;
+            else if (_eMovementMode == EMovementMode.StartingInteract || _eMovementMode == EMovementMode.Interacting)
+                _eMovementMode = EMovementMode.Interacting;
+            else if (_isJumpActivated == true && _jumpCount < MAX_JUMPS_IN_ROW)
+                _eMovementMode = EMovementMode.StartingJump;
+            else if (_dirY != 0 && _canClimb == true)
+                _eMovementMode = EMovementMode.Climbing;
+            else if (_rbody.velocity.y > 0.01)
+            {
+                if (_isShootActivated == true || _eMovementMode == EMovementMode.ShootingFlyingUp)
+                    _eMovementMode = EMovementMode.ShootingFlyingUp;
+                else
+                    _eMovementMode = EMovementMode.FlyingUp;
+                if (_isShootActivated == true)
+                    _secondsSinceShootAnimationStarted = 0.0f;
+            }
+            else if (_rbody.velocity.y < -0.01)
+            {
+                if (_isShootActivated == true || _eMovementMode == EMovementMode.ShootingFlyingDown)
+                    _eMovementMode = EMovementMode.ShootingFlyingDown;
+                else
+                    _eMovementMode = EMovementMode.FlyingDown;
+                if (_isShootActivated == true)
+                    _secondsSinceShootAnimationStarted = 0.0f;
+            }
+            else if (_dirX != 0)
+            {
+                if (_isShootActivated == true || _eMovementMode == EMovementMode.ShootingRunning)
+                    _eMovementMode = EMovementMode.ShootingRunning;
+                else
+                    _eMovementMode = EMovementMode.Running;
+                if (_isShootActivated == true)
+                    _secondsSinceShootAnimationStarted = 0.0f;
+            }
             else
-                _eMovementMode = EMovementMode.FlyingUp;
+            {
+                if (_isShootActivated == true || _eMovementMode == EMovementMode.ShootingIdle)
+                    _eMovementMode = EMovementMode.ShootingIdle;
+                else
+                    _eMovementMode = EMovementMode.Idle;
+                if (_isShootActivated == true)
+                    _secondsSinceShootAnimationStarted = 0.0f;
+            }
         }
-        else if (_rbody.velocity.y < -0.01)
-        {
-            if (_eMovementMode == EMovementMode.StartingShoot)
-                _eMovementMode = EMovementMode.ShootingFlyingDown;
-            else
-                _eMovementMode = EMovementMode.FlyingDown;
-        }
-        else if (_dirX != 0)
-        {
-            if (_eMovementMode == EMovementMode.StartingShoot)
-                _eMovementMode = EMovementMode.ShootingRunning;
-            else
-                _eMovementMode = EMovementMode.Running;
-        }
-        else
-        {
-            if (_eMovementMode == EMovementMode.StartingShoot)
-                _eMovementMode = EMovementMode.ShootingIdle;
-            else
-                _eMovementMode = EMovementMode.Idle;
-        }
-     
         _animator.SetInteger("movementMode", (int)_eMovementMode);
-
+        IntState = (int)_eMovementMode;
+        if (_dirX != 0)
+            _isFacingRight = (_dirX > 0);
+        _activeHand.SetActive(false);
         LayerMask terrainLayerMask = 1 << LayerMask.NameToLayer("Terrain");
         switch (_eMovementMode)
         {
@@ -144,7 +163,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 break;
             case EMovementMode.Running:
                 _rbody.velocity = new Vector2(RUN_VELOCITY * _dirX, 0.0f);
-                _sprite.flipX = (_dirX < 0);
+                _sprite.flipX = !_isFacingRight;
                 _jumpCount = 0;
                 break;
             case EMovementMode.Climbing:
@@ -157,15 +176,12 @@ public class PlayerController : MonoBehaviour, IPunObservable
             case EMovementMode.FlyingUp:
                 _rbody.velocity = new Vector2(RUN_VELOCITY * _dirX, _rbody.velocity.y);
                 if (_dirX != 0)
-                    _sprite.flipX = (_dirX < 0);
+                    _sprite.flipX = !_isFacingRight;
                 break;
             case EMovementMode.FlyingDown:
                 _rbody.velocity = new Vector2(RUN_VELOCITY * _dirX, _rbody.velocity.y);
                 if (_dirX != 0)
-                    _sprite.flipX = (_dirX < 0);
-                break;
-            case EMovementMode.StartingShoot:
-                _secondsSinceShootAnimationStarted = 0.0f;
+                    _sprite.flipX = !_isFacingRight;
                 break;
             case EMovementMode.StartingJump:
                 _rbody.velocity = new Vector2(_rbody.velocity.x, JUMP_VELOCITY);
@@ -181,28 +197,47 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 break;
             case EMovementMode.ShootingFlyingUp:
                 _secondsSinceShootAnimationStarted += Time.deltaTime;
-                if (_secondsSinceShootAnimationStarted > SHOOTING_FLY_UP_ANIMATION_DURATION)
+                if (_isFacingRight == true) _activeHand = RightHandFly;
+                else _activeHand = LeftHandFly;
+                _activeHand.SetActive(true);
+                if (_secondsSinceShootAnimationStarted > 2 * SHOOTING_ANIMATION_DURATION)
                     _eMovementMode = EMovementMode.FlyingUp;
                 break;
             case EMovementMode.ShootingFlyingDown:
                 _secondsSinceShootAnimationStarted += Time.deltaTime;
-                if (_secondsSinceShootAnimationStarted > SHOOTING_FLY_DOWN_ANIMATION_DURATION)
+                if (_isFacingRight == true) _activeHand = RightHandFly;
+                else _activeHand = LeftHandFly;
+                _activeHand.SetActive(true);
+                if (_secondsSinceShootAnimationStarted > 2 * SHOOTING_ANIMATION_DURATION)
                     _eMovementMode = EMovementMode.FlyingDown;
                 break;
             case EMovementMode.ShootingIdle:
-                Debug.Log(_eMovementMode);
                 _secondsSinceShootAnimationStarted += Time.deltaTime;
-                if (_secondsSinceShootAnimationStarted > SHOOTING_IDLE_ANIMATION_DURATION)
+                if (_isFacingRight == true) _activeHand = RightHandIdle;
+                else _activeHand = LeftHandIdle;
+                _activeHand.SetActive(true);
+                if (_secondsSinceShootAnimationStarted > 2 * SHOOTING_ANIMATION_DURATION)
                     _eMovementMode = EMovementMode.Idle;
                 break;
             case EMovementMode.ShootingRunning:
                 _secondsSinceShootAnimationStarted += Time.deltaTime;
-                if (_secondsSinceShootAnimationStarted > SHOOTING_RUN_ANIMATION_DURATION)
+                if (_isFacingRight == true) _activeHand = RightHandRun;
+                else _activeHand = LeftHandRun;
+                _activeHand.SetActive(true);
+                _rbody.velocity = new Vector2(RUN_VELOCITY * _dirX, 0.0f);
+                if (_secondsSinceShootAnimationStarted > 2 * SHOOTING_ANIMATION_DURATION)
                     _eMovementMode = EMovementMode.Running;
                 break;
         }
         if (_eMovementMode != EMovementMode.Climbing)
             _collider.excludeLayers = _defaultExcludeLayerMask; //disable climbing through the floor
+        if (_activeHand.activeInHierarchy)
+        {
+            Gun.transform.localPosition = _activeHand.transform.localPosition;
+            _gunSprite.flipX = !_isFacingRight;
+            Gun.SetActive(true);
+        }
+        else Gun.SetActive(false);
     }
 
     public void ResetPosition()
@@ -245,6 +280,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
             stream.SendNext(_isJumpActivated);
             stream.SendNext(_isUseActivated);
             stream.SendNext(_isShootActivated);
+            stream.SendNext(_eMovementMode);
         }
         else
         {
@@ -253,6 +289,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
             _isJumpActivated = (bool)stream.ReceiveNext();
             _isUseActivated = (bool)stream.ReceiveNext();
             _isShootActivated = (bool)stream.ReceiveNext();
+            _eMovementMode = (EMovementMode)stream.ReceiveNext();
         }
     }
 }
