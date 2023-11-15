@@ -10,7 +10,7 @@ public class Switch : MonoBehaviour
     [SerializeField] private float _resetSeconds;
     private List<TurnOnOffDevice> _devices;
     private TurnOnOffDevice _device;
-    private float _secondsSinceTurnedOn;
+    private float _secondsSinceTurnedOn = 5.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +24,7 @@ public class Switch : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (_device._isOn == false)
+        if (_device._isOn == false && _secondsSinceTurnedOn > 1.0f)
         {
             if (collision.gameObject.CompareTag("Player"))
                 if (collision.gameObject.GetComponent<PlayerController>().GetMovementMode() == 7)
@@ -32,7 +32,7 @@ public class Switch : MonoBehaviour
                     SwitchOn();
                 }
         }
-        else
+        else if (_secondsSinceTurnedOn > 1.0f)
             if (collision.gameObject.CompareTag("Player"))
                 if (collision.gameObject.GetComponent<PlayerController>().GetMovementMode() == 7)
                 {
@@ -42,15 +42,14 @@ public class Switch : MonoBehaviour
 
     private void Update()
     {
-        if (_device._isOn == true && _resetSeconds != 0.0f)
-            if (_secondsSinceTurnedOn < _resetSeconds)
-            {
-                _secondsSinceTurnedOn += Time.deltaTime;
-            }
-            else
+        if (_device._isOn == true)
+        {
+            _secondsSinceTurnedOn += Time.deltaTime;
+            if (_secondsSinceTurnedOn > _resetSeconds && _resetSeconds != 0.0f)
             {
                 SwitchOff();
             }
+        }
     }
     private void SwitchOn()
     {

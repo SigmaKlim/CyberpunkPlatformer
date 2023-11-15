@@ -7,6 +7,8 @@ public class PlatformController : MonoBehaviour
     private bool _needsRestart = false;
     private Rigidbody2D _rbody;
     private TurnOnOffDevice _switch;
+    public float _wrapUp;
+    public float _wrapDown;
     [SerializeField] private float _velocityY = 3.0f;
     private void Start()
     {
@@ -27,6 +29,12 @@ public class PlatformController : MonoBehaviour
             _needsRestart = true;
     }
 
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    IdentificationTag colliderTag = collision.gameObject.GetComponent<IdentificationTag>();
+    //    if (colliderTag != null && colliderTag.HasTag("Rails"))
+    //        _isOnRails = true;
+    //}
     public bool NeedsRestart()
     {
         return _needsRestart; 

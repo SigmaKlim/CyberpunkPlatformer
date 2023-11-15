@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlatformLiftController : MonoBehaviour
 {
     [SerializeField] private GameObject _platform;
+
     private PlatformController _platformController;
     // Start is called before the first frame update
     void Start()
@@ -19,6 +21,7 @@ public class PlatformLiftController : MonoBehaviour
         {
             _platformController.DisableRestart();
             _platformController.InvertVelocity();
+            Debug.Log("!!!");
         }
     }
 }
