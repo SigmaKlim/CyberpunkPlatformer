@@ -2,6 +2,10 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 enum EMovementMode
 {
@@ -55,7 +59,14 @@ public class PlayerController : MonoBehaviour, IPunObservable
     public GameObject           Gun;
     public GameObject           Shot;
     private SpriteRenderer      _gunSprite;
-
+    public bool                 WasHit;
+    private float               _secondsSinceHit;
+    private const float         HIT_ANIMATION_DURATION = 0.5f;
+    public int                 Health;
+    private Image               _healthBarImage;
+    public Sprite[]             HealthBarSprites;
+    //public GameObject EndgameBanner;
+    //public UnityEvent           OnPlayerDead;
     public int IntState;
     //consumed from photon view
 
@@ -84,6 +95,14 @@ public class PlayerController : MonoBehaviour, IPunObservable
         _activeHand = RightHandFly;
         _gunSprite = Gun.GetComponent<SpriteRenderer>();
         _secondsSinceShootAnimationStarted = 0.0f;
+        Health = 4;
+        _healthBarImage = GameObject.Find("Health").GetComponent<Image>();
+        //EndgameBanner = GameObject.Find("DeathImage");
+        //if (_photonView.IsMine)
+        //{
+        //    EndgameBanner.SetActive(false);
+        //}
+
         if (_photonView.IsMine == true)
         {
             GetComponentInChildren<Camera>().enabled = true;
@@ -97,7 +116,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     // Update is called once per frame
     private void Update()
     {
-        //_isShootActivated = false;
+        bool _wasSelfHarfInflicted = false;
         if (_photonView.IsMine == true)
         {
             _dirY = Input.GetAxisRaw("Vertical");
@@ -105,7 +124,10 @@ public class PlayerController : MonoBehaviour, IPunObservable
             _isJumpActivated = Input.GetButtonDown("Jump");
             _isUseActivated = Input.GetButtonDown("Use");
             _isShootActivated = Input.GetButtonDown("Shoot");
-        
+            //
+            _wasSelfHarfInflicted = Input.GetKeyDown("q");
+            if ( _wasSelfHarfInflicted ) { Health--; }
+            //
             if (_isUseActivated == true && (_eMovementMode == EMovementMode.Idle) && _canInteract)
                 _eMovementMode = EMovementMode.StartingInteract;
             else if (_eMovementMode == EMovementMode.StartingInteract || _eMovementMode == EMovementMode.Interacting)
@@ -144,6 +166,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 else
                     _eMovementMode = EMovementMode.Idle;
             }
+
+            _healthBarImage.sprite = HealthBarSprites[Health];
         }
         _animator.SetInteger("movementMode", (int)_eMovementMode);
         IntState = (int)_eMovementMode;
@@ -257,6 +281,25 @@ public class PlayerController : MonoBehaviour, IPunObservable
             Gun.SetActive(true);
         }
         else Gun.SetActive(false);
+
+        if (WasHit == true)
+        {
+            _sprite.color = Color.red;
+            _secondsSinceHit = 0.0f;
+            WasHit = false;
+            Health--;
+        }
+        else if (_secondsSinceHit > HIT_ANIMATION_DURATION)
+        {
+            _sprite.color = Color.white;
+        }
+        else _secondsSinceHit += UnityEngine.Time.deltaTime;
+
+        if (Health == 0)
+        {
+            if (_photonView.IsMine)
+                PhotonNetwork.LeaveRoom();
+        }
     }
 
     public void ResetPosition()
@@ -312,3 +355,4 @@ public class PlayerController : MonoBehaviour, IPunObservable
         }
     }
 }
+

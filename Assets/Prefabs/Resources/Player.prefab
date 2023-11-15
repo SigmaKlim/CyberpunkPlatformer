@@ -512,7 +512,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4898219770401315078}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!114 &8439097627606774154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -737,6 +737,14 @@ MonoBehaviour:
   LeftHandIdle: {fileID: 2333755483861621738}
   Gun: {fileID: 8883279269976401326}
   Shot: {fileID: 8283972075876720825}
+  WasHit: 0
+  Health: 0
+  HealthBarSprites:
+  - {fileID: -1018677200, guid: 06a62b49e7f83a644a234e38915c8189, type: 3}
+  - {fileID: -316973956, guid: 06a62b49e7f83a644a234e38915c8189, type: 3}
+  - {fileID: -2056979718, guid: 06a62b49e7f83a644a234e38915c8189, type: 3}
+  - {fileID: 320800513, guid: 06a62b49e7f83a644a234e38915c8189, type: 3}
+  - {fileID: -232530538, guid: 06a62b49e7f83a644a234e38915c8189, type: 3}
   IntState: 0
 --- !u!114 &8926727788126016826
 MonoBehaviour:
