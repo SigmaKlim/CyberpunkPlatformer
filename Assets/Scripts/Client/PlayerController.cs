@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     private float               _climbX;
     private const float         INTERACT_ANIMATION_DURATION = 0.5f;
     private float               _secondsSinceInteractAnimationStarted;
-    private float               _secondsSinceShootAnimationStarted;
+    public float                _secondsSinceShootAnimationStarted;
     private const float         SHOOTING_ANIMATION_DURATION = 1.0f;
     private bool                _canInteract;
     private LayerMask           _defaultExcludeLayerMask;
@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         _defaultExcludeLayerMask = 1 << LayerMask.NameToLayer("Player");
         _activeHand = RightHandFly;
         _gunSprite = Gun.GetComponent<SpriteRenderer>();
+        _secondsSinceShootAnimationStarted = 0.0f;
         if (_photonView.IsMine == true)
         {
             GetComponentInChildren<Camera>().enabled = true;
@@ -128,8 +129,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     _eMovementMode = EMovementMode.ShootingFlyingDown;
                 else
                     _eMovementMode = EMovementMode.FlyingDown;
-                if (_isShootActivated == true)
-                    _secondsSinceShootAnimationStarted = 0.0f;
             }
             else if (_dirX != 0)
             {
@@ -137,8 +136,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     _eMovementMode = EMovementMode.ShootingRunning;
                 else
                     _eMovementMode = EMovementMode.Running;
-                if (_isShootActivated == true)
-                    _secondsSinceShootAnimationStarted = 0.0f;
             }
             else
             {
@@ -146,8 +143,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     _eMovementMode = EMovementMode.ShootingIdle;
                 else
                     _eMovementMode = EMovementMode.Idle;
-                if (_isShootActivated == true)
-                    _secondsSinceShootAnimationStarted = 0.0f;
             }
         }
         _animator.SetInteger("movementMode", (int)_eMovementMode);
@@ -194,40 +189,55 @@ public class PlayerController : MonoBehaviour, IPunObservable
             case EMovementMode.Interacting:
                 _secondsSinceInteractAnimationStarted += Time.deltaTime;
                 if (_secondsSinceInteractAnimationStarted > INTERACT_ANIMATION_DURATION)
+                {
                     _eMovementMode = EMovementMode.Idle;
-                break;
+                    _secondsSinceShootAnimationStarted = 0.0f;
+                }
+                    break;
             case EMovementMode.ShootingFlyingUp:
                 _secondsSinceShootAnimationStarted += Time.deltaTime;
                 if (_isFacingRight == true) _activeHand = RightHandFly;
                 else _activeHand = LeftHandFly;
                 _activeHand.SetActive(true);
-                if (_secondsSinceShootAnimationStarted > 2 * SHOOTING_ANIMATION_DURATION)
+                if (_secondsSinceShootAnimationStarted > SHOOTING_ANIMATION_DURATION)
+                {
                     _eMovementMode = EMovementMode.FlyingUp;
-                break;
-            case EMovementMode.ShootingFlyingDown:
+                    _secondsSinceShootAnimationStarted = 0.0f;
+                }
+                    break;
+            case EMovementMode.ShootingFlyingDown:;
                 _secondsSinceShootAnimationStarted += Time.deltaTime;
                 if (_isFacingRight == true) _activeHand = RightHandFly;
                 else _activeHand = LeftHandFly;
                 _activeHand.SetActive(true);
-                if (_secondsSinceShootAnimationStarted > 2 * SHOOTING_ANIMATION_DURATION)
+                if (_secondsSinceShootAnimationStarted > SHOOTING_ANIMATION_DURATION)
+                {
                     _eMovementMode = EMovementMode.FlyingDown;
-                break;
+                    _secondsSinceShootAnimationStarted = 0.0f;
+                }
+                    break;
             case EMovementMode.ShootingIdle:
                 _secondsSinceShootAnimationStarted += Time.deltaTime;
                 if (_isFacingRight == true) _activeHand = RightHandIdle;
                 else _activeHand = LeftHandIdle;
                 _activeHand.SetActive(true);
-                if (_secondsSinceShootAnimationStarted > 2 * SHOOTING_ANIMATION_DURATION)
+                if (_secondsSinceShootAnimationStarted > SHOOTING_ANIMATION_DURATION)
+                {
                     _eMovementMode = EMovementMode.Idle;
-                break;
+                    _secondsSinceShootAnimationStarted = 0.0f;
+                }
+                    break;
             case EMovementMode.ShootingRunning:
                 _secondsSinceShootAnimationStarted += Time.deltaTime;
                 if (_isFacingRight == true) _activeHand = RightHandRun;
                 else _activeHand = LeftHandRun;
                 _activeHand.SetActive(true);
                 _rbody.velocity = new Vector2(RUN_VELOCITY * _dirX, 0.0f);
-                if (_secondsSinceShootAnimationStarted > 2 * SHOOTING_ANIMATION_DURATION)
+                if (_secondsSinceShootAnimationStarted > SHOOTING_ANIMATION_DURATION)
+                {
                     _eMovementMode = EMovementMode.Running;
+                    _secondsSinceShootAnimationStarted = 0.0f;
+                }
                 break;
         }
         if (_eMovementMode != EMovementMode.Climbing)
