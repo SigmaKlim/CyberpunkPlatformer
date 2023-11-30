@@ -22,11 +22,6 @@ public class ClimbLadder : MonoBehaviour
             collision.gameObject.GetComponent<PlayerController>().SetClimbX(_climbX);
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            collision.gameObject.GetComponent<PlayerController>().DisableClimbing();
-        }
-    }
+
+    
 }

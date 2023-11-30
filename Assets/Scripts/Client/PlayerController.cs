@@ -65,8 +65,11 @@ public class PlayerController : MonoBehaviour, IPunObservable
     public int                 Health;
     private Image               _healthBarImage;
     public Sprite[]             HealthBarSprites;
-    //public GameObject EndgameBanner;
-    //public UnityEvent           OnPlayerDead;
+    private FixedJoystick       _joystick;
+    private ButtonController    _shootButtonController;
+    private ButtonController    _jumpButtonController;
+    private ButtonController    _useButtonController;
+
     public int IntState;
     //consumed from photon view
 
@@ -97,11 +100,10 @@ public class PlayerController : MonoBehaviour, IPunObservable
         _secondsSinceShootAnimationStarted = 0.0f;
         Health = 4;
         _healthBarImage = GameObject.Find("Health").GetComponent<Image>();
-        //EndgameBanner = GameObject.Find("DeathImage");
-        //if (_photonView.IsMine)
-        //{
-        //    EndgameBanner.SetActive(false);
-        //}
+        _joystick = GameObject.Find("Fixed Joystick").GetComponent<FixedJoystick>();
+        _shootButtonController = GameObject.Find("ShootButton").GetComponent<ButtonController>();
+        _jumpButtonController = GameObject.Find("JumpButton").GetComponent<ButtonController>();
+        _useButtonController = GameObject.Find("UseButton").GetComponent<ButtonController>();
 
         if (_photonView.IsMine == true)
         {
@@ -119,12 +121,17 @@ public class PlayerController : MonoBehaviour, IPunObservable
         bool _wasSelfHarfInflicted = false;
         if (_photonView.IsMine == true)
         {
-            _dirY = Input.GetAxisRaw("Vertical");
-            _dirX = Input.GetAxisRaw("Horizontal");
-            _isJumpActivated = Input.GetButtonDown("Jump");
-            _isUseActivated = Input.GetButtonDown("Use");
-            _isShootActivated = Input.GetButtonDown("Shoot");
-            //
+            _dirY = (Mathf.Abs(_joystick.Vertical) > 0.4f) ? _joystick.Vertical : 0.0f;
+                //Input.GetAxisRaw("Vertical");
+            _dirX = _joystick.Horizontal;
+            //Input.GetAxisRaw("Horizontal");
+            _isJumpActivated = _jumpButtonController._isPressed;
+                //Input.GetButtonDown("Jump");
+            _isUseActivated = _useButtonController._isPressed;
+                //Input.GetButtonDown("Use");
+            _isShootActivated = _shootButtonController._isPressed;
+                //Input.GetButtonDown("Shoot");
+            
             _wasSelfHarfInflicted = Input.GetKeyDown("q");
             if ( _wasSelfHarfInflicted ) { Health--; }
             //
@@ -300,6 +307,9 @@ public class PlayerController : MonoBehaviour, IPunObservable
             if (_photonView.IsMine)
                 PhotonNetwork.LeaveRoom();
         }
+
+        _isJumpActivated = false;
+        _isShootActivated = false;
     }
 
     public void ResetPosition()
@@ -354,5 +364,13 @@ public class PlayerController : MonoBehaviour, IPunObservable
             _eMovementMode = (EMovementMode)stream.ReceiveNext();
         }
     }
+
+    public float GetDirY()
+    {
+        return _dirY;
+    }
+
+
+
 }
 
